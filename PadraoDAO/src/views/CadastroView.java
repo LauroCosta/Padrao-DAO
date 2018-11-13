@@ -1,14 +1,52 @@
-
 package views;
+
+import controllers.CadastroController;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import models.CadastroModel;
 
 
 public class CadastroView extends javax.swing.JFrame {
-
- 
-    public CadastroView() {
+   
+    private CadastroController controller; 
+    
+    public CadastroView(CadastroModel model) {
+       
+        this.setController(new CadastroController(this, model));
+        this.setLocation(500, 250);
         initComponents();
     }
 
+    public JTextField getCampoEmail() {
+        return campoEmail;
+    }
+
+    public JTextField getCampoNome() {
+        return campoNome;
+    }
+
+    public JFormattedTextField getCampoTelefone() {
+        return campoTelefone;
+    }
+
+    public CadastroController getController() {
+        return controller;
+    }
+
+    public void setController(CadastroController controller) {
+        if(controller != null)
+           this.controller = controller;
+    }
+
+    public void notificaUsuario(String msg){
+        
+        JOptionPane.showMessageDialog(null, msg);
+        
+    }
+    
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -82,7 +120,7 @@ public class CadastroView extends javax.swing.JFrame {
         labelTelefone.setText("Telefone");
 
         try {
-            campoTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
+            campoTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -96,6 +134,7 @@ public class CadastroView extends javax.swing.JFrame {
         });
 
         btSalvar.setText("Salvar");
+        btSalvar.setActionCommand("salvar");
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSalvarActionPerformed(evt);
@@ -254,7 +293,7 @@ public class CadastroView extends javax.swing.JFrame {
     }//GEN-LAST:event_btSalvar4ActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        // TODO add your handling code here:
+        this.getController().tratarEvento(evt);
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed

@@ -1,20 +1,21 @@
 
 package models;
 
-public class Pessoa {
+public class Contato {
     
     private String nome;
     private String telefone;
     private String email;
 
-    public Pessoa(String nome, String telefone, String email) {
+    public Contato(String nome, String telefone, String email) {
+       
         this.setNome(nome);
         this.setTelefone(telefone);
         this.setEmail(email);
      
     }
 
-    public Pessoa() {
+    public Contato() {
         super();
     }
 
@@ -41,4 +42,10 @@ public class Pessoa {
     public void setEmail(String email) {
         this.email = email;
     }    
+
+    @Override
+    public String toString() {
+        return "Nome: " + nome + "\nTelefone: " + telefone + "\nEmail: " + email;
+    }
+
 }

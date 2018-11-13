@@ -3,6 +3,7 @@ package conexao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,7 +11,7 @@ import java.util.logging.Logger;
 public class Conexao {
 
     private static final String DRIVER = "com.mysql.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/padraoDAO";
+    private static final String URL = "jdbc:mysql://localhost:3306/DAO";
     private static final String USER = "root";
     private static final String PASS = "";
 
@@ -25,9 +26,9 @@ public class Conexao {
 
     public static void closeConnection(Connection con) {
         try {
-            if (con != null) {
+            if (con != null) 
                 con.close();
-            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -39,14 +40,25 @@ public class Conexao {
 
         try {
 
-            if (stmt != null) {
+            if (stmt != null)
                 stmt.close();
-            }
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    public static void closeConnection(Connection con, PreparedStatement stmt, ResultSet rs) {
+
+        closeConnection(con, stmt);
+
+        if (rs != null) {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 
 }

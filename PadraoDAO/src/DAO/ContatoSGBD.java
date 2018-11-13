@@ -1,0 +1,143 @@
+package DAO;
+
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+import models.*;
+import conexao.Conexao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+public class ContatoSGBD implements ContatoDAO {
+
+    @Override
+    public void salvar(Contato contato) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+
+            stmt = con.prepareStatement("INSERT INTO contato (nome,telefone,email)VALUES(?,?,?)");
+
+            stmt.setString(1, contato.getNome());
+            stmt.setString(2, contato.getTelefone());
+            stmt.setString(3, contato.getEmail());
+
+            stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println("algo de errado não está certo\n" + ex);
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+    }
+
+    @Override
+    public void editar(Contato p) {
+
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = con.prepareStatement("UPDATE contato SET nome = ?,telefone = ?, email = ? WHERE nome = ?");
+            stmt.setString(1, p.getNome());
+            stmt.setString(2, p.getTelefone());
+            stmt.setString(3, p.getEmail());
+
+            stmt.setString(4, p.getNome());
+
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+    }
+
+    @Override
+    public void excluir(String nome) {
+
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = con.prepareStatement("DELETE FROM contato WHERE nome = ?");
+            stmt.setString(1, nome);
+            stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+
+    }
+
+    public Contato buscar(String nome) {
+
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        Contato c1 = null;
+
+        try {
+            stmt = con.prepareStatement("SELECT * FROM contato WHERE nome = ?");
+            stmt.setString(1, nome);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+
+                c1 = new Contato();
+
+                c1.setNome(rs.getString("nome"));
+                c1.setTelefone(rs.getString("telefone"));
+                c1.setEmail(rs.getString("email"));
+                
+            }
+
+        } catch (SQLException ex) {
+            
+            
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+
+        return c1;
+
+    }
+
+    public ArrayList<Contato> lista() {
+
+        Connection con = Conexao.getConnection();
+
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        ArrayList<Contato> contatos = new ArrayList<>();
+
+        try {
+            stmt = con.prepareStatement("SELECT * FROM contato");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                Contato c1 = new Contato();
+
+                c1.setNome(rs.getString("nome"));
+                c1.setTelefone(rs.getString("telefone"));
+                c1.setEmail(rs.getString("fone"));
+
+                contatos.add(c1);
+            }
+
+        } catch (SQLException ex) {
+
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+        return contatos;
+    }
+
+}

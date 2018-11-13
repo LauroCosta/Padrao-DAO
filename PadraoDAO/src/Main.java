@@ -1,4 +1,4 @@
-
+import models.CadastroModel;
 import views.CadastroView;
 
 public class Main {
@@ -32,9 +32,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        CadastroView view = new CadastroView();
-        startView(view);
-        
+        CadastroView view = new CadastroView(new CadastroModel());
+        startView(view);        
         
     }
 
