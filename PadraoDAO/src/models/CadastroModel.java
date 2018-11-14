@@ -19,14 +19,16 @@ public class CadastroModel {
 
     }
 
-    public void salvar(Contato contato, int sistemaArquivo) {
-
+    public boolean salvar(Contato contato, int sistemaArquivo) {
+        
+        boolean salvo = false;
+        
         if (this.getDaos().get(sistemaArquivo) != null) {
-            this.getDaos().get(sistemaArquivo).salvar(contato);
+         salvo = this.getDaos().get(sistemaArquivo).salvar(contato);
             this.notifyALL();
         }
-
-    }
+        return salvo;
+    }   
 
     public void editar(Contato contato, int sistemaArmazenamento) {
 

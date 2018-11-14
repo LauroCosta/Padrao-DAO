@@ -20,7 +20,7 @@ public class CadastroController implements Observer {
         this.setModel(model);
         this.setView(view);
         this.getModel().addObserver(this);
-
+     
     }
 
     public CadastroView getView() {
@@ -60,13 +60,17 @@ public class CadastroController implements Observer {
                 }
 
                 if (this.isCadastrado(c1)) {
-
                     this.getView().notificaUsuario("Usuario já cadastrado: \n");
                     break;
                 }
 
-                this.getModel().salvar(c1, this.verificarSistemaArmazenamento());
-                this.getView().notificaUsuario("Contato salvo com sucesso: \n" + c1.toString());
+                boolean salvo = this.getModel().salvar(c1, this.verificarSistemaArmazenamento());
+
+                if (salvo) {
+                    this.getView().notificaUsuario("Contato salvo com sucesso: \n" + c1.toString());
+                } else {
+                    this.getView().notificaUsuario("Não foi possivel salvar o contato");
+                }
 
                 break;
 
@@ -88,38 +92,34 @@ public class CadastroController implements Observer {
                 break;
 
             case "editar":
-               
+
                 this.camposEditaveis(true);
                 this.getView().getCampoNome().setEditable(false);
                 this.getView().getBtExcluir().setEnabled(false);
                 this.getView().getBtEditar().setActionCommand("salvarAlt");
                 this.getView().getBtEditar().setText("Salvar Alterações");
-                
+
                 break;
-            
+
             case "salvarAlt":
 
-                
                 this.getView().getBtExcluir().setEnabled(true);
                 this.camposEditaveis(false);
                 this.getView().getBtEditar().setActionCommand("editar");
                 this.getView().getBtEditar().setText("Editar");
-                
-                if(this.validarFormulario(this.contatoSelecionado()) != null){
+
+                if (this.validarFormulario(this.contatoSelecionado()) != null) {
                     this.getView().notificaUsuario(this.validarFormulario(this.contatoSelecionado()));
                     break;
                 }
-                
+
                 this.getModel().editar(this.contatoSelecionado(), this.verificarSistemaArmazenamento());
-                
-            break;
+
+                break;
 
         }
     }
 
-
-    
-    
     private String validarFormulario(Contato form) {
 
         if (form.getNome().length() < 2) {
@@ -145,18 +145,17 @@ public class CadastroController implements Observer {
         this.pegarSelecionado();
     }
 
-    private Contato contatoSelecionado(){
-        
+    private Contato contatoSelecionado() {
+
         Contato contato = new Contato();
-        
+
         contato.setNome(this.getView().getCampoNome().getText());
         contato.setTelefone(this.getView().getCampoTelefone().getText());
         contato.setEmail(this.getView().getCampoEmail().getText());
-      
+
         return contato;
     }
-    
-    
+
     private void pegarSelecionado() {
 
         if (this.getView().getTabelaDados().getSelectedRow() != -1) {
@@ -207,6 +206,7 @@ public class CadastroController implements Observer {
 
             case "SGBD":
 
+                this.getView().getRadioSGBD().setSelected(true);
                 this.getView().getRadioXML().setSelected(false);
                 this.getView().getRadioArquivo().setSelected(false);
                 this.preencherTabela(0);
@@ -215,6 +215,7 @@ public class CadastroController implements Observer {
 
             case "XML":
 
+                this.getView().getRadioXML().setSelected(true);
                 this.getView().getRadioSGBD().setSelected(false);
                 this.getView().getRadioArquivo().setSelected(false);
                 this.preencherTabela(1);
@@ -223,6 +224,7 @@ public class CadastroController implements Observer {
 
             case "ARQUIVO":
 
+                this.getView().getRadioArquivo().setSelected(true);
                 this.getView().getRadioSGBD().setSelected(false);
                 this.getView().getRadioXML().setSelected(false);
                 this.preencherTabela(2);
