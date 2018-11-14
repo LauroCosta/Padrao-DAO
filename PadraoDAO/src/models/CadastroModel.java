@@ -7,83 +7,88 @@ import DAO.ContatoXML;
 import java.util.ArrayList;
 
 public class CadastroModel {
-    
+
     private ArrayList<ContatoDAO> daos;
     private ArrayList<Observer> observers;
-    
-    
+
     public CadastroModel() {
-        
+
         this.setObservers(new ArrayList<Observer>());
         this.setDaos(new ArrayList<ContatoDAO>());
         this.criarDAOS();
-     
-    }
-    
 
-    public void salvar(Contato contato){
+    }
+
+    public void salvar(Contato contato, int sistemaArquivo) {
+
+        if (this.getDaos().get(sistemaArquivo) != null) {
+            this.getDaos().get(sistemaArquivo).salvar(contato);
+            this.notifyALL();
+        }
+
+    }
+
+    public void editar(Contato contato, int sistemaArmazenamento) {
+
+         if (this.getDaos().get(sistemaArmazenamento) != null) {
+            this.getDaos().get(sistemaArmazenamento).editar(contato);
+            this.notifyALL();
+         }
   
-        for (ContatoDAO dao : daos) 
-            dao.salvar(contato);
-        
     }
-    
-    public void editar(Contato contato){
-  
-        for (ContatoDAO dao : daos) 
-            dao.editar(contato);
-        
-        this.notifyALL();
-        
+
+    public void excluir(Contato contato, int sistemaArmazenamento) {
+
+        if (this.getDaos().get(sistemaArmazenamento) != null) {
+            this.getDaos().get(sistemaArmazenamento).excluir(contato.getNome());
+            this.notifyALL();
+
+        }
+
     }
-    
-    public void excluir(Contato contato){
-  
-        for (ContatoDAO dao : daos) 
-            dao.excluir(contato.getNome());
-        
-        this.notifyALL();
-        
+
+    public Contato buscar(String nome, int sistemaArmazenamento) {
+
+        return this.getDaos().get(sistemaArmazenamento).buscar(nome);
+
     }
-    
-    public Contato buscar(String nome, int sistemaDados){
-  
-       return this.getDaos().get(sistemaDados).buscar(nome);
-    
-    }
-    
-    public ArrayList<Contato> buscar(int sistemaDados){
+
+    public ArrayList<Contato> lista(int sistemaDados) {
         
-       return this.getDaos().get(sistemaDados).lista();
-    
+        if(this.getDaos().get(sistemaDados) != null)
+          return this.getDaos().get(sistemaDados).lista();
+
+        return null;
     }
-   
-    public void addObserver(Observer ob){
+
+    public void addObserver(Observer ob) {
         this.getObservers().add(ob);
     }
- 
-    private void notifyALL(){
- 
-        for (Observer observer : observers) 
-           observer.update();
+
+    private void notifyALL() {
+
+        for (Observer observer : observers) {
+            observer.update();
+        }
 
     }
-    
-    private void criarDAOS(){
-      
+
+    private void criarDAOS() {
+
         this.getDaos().add(new ContatoSGBD());
         this.getDaos().add(new ContatoXML());
         this.getDaos().add(new ContatoARQ());
-  
+
     }
-  
+
     private ArrayList<ContatoDAO> getDaos() {
         return daos;
     }
 
     private void setDaos(ArrayList<ContatoDAO> daos) {
-        if(daos != null)
+        if (daos != null) {
             this.daos = daos;
+        }
     }
 
     private ArrayList<Observer> getObservers() {
@@ -91,8 +96,9 @@ public class CadastroModel {
     }
 
     private void setObservers(ArrayList<Observer> observers) {
-        if(observers != null)
+        if (observers != null) {
             this.observers = observers;
+        }
     }
-  
+
 }

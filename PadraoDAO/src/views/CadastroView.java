@@ -1,8 +1,11 @@
 package views;
 
 import controllers.CadastroController;
+import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import models.CadastroModel;
 
@@ -40,13 +43,44 @@ public class CadastroView extends javax.swing.JFrame {
     }
 
     public void notificaUsuario(String msg){
-        
         JOptionPane.showMessageDialog(null, msg);
-        
+    }
+
+    public JTable getTabelaDados() {
+        return tabelaDados;
+    }
+
+    public JButton getBtSalvar() {
+        return btSalvar;
+    }
+
+    public JButton getBtEditar() {
+        return btEditar;
+    }
+
+    public JButton getBtExcluir() {
+        return btExcluir;
+    }
+
+    public JButton getBtNovo() {
+        return btNovo;
+    }
+
+    public JRadioButton getRadioArquivo() {
+        return radioArquivo;
+    }
+
+    public JRadioButton getRadioSGBD() {
+        return radioSGBD;
+    }
+
+    public JRadioButton getRadioXML() {
+        return radioXML;
     }
     
     
     
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -55,6 +89,7 @@ public class CadastroView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaAnimais = new javax.swing.JTable();
         btSalvar4 = new javax.swing.JButton();
+        jDesktopPane1 = new javax.swing.JDesktopPane();
         jPanel2 = new javax.swing.JPanel();
         labelNome = new javax.swing.JLabel();
         campoNome = new javax.swing.JTextField();
@@ -65,8 +100,13 @@ public class CadastroView extends javax.swing.JFrame {
         btSalvar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
         btEditar = new javax.swing.JButton();
+        btNovo = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaDados = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        radioSGBD = new javax.swing.JRadioButton();
+        radioXML = new javax.swing.JRadioButton();
+        radioArquivo = new javax.swing.JRadioButton();
 
         tabelaAnimais.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -110,6 +150,17 @@ public class CadastroView extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+        jDesktopPane1.setLayout(jDesktopPane1Layout);
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Padrão DAO");
 
@@ -135,6 +186,7 @@ public class CadastroView extends javax.swing.JFrame {
 
         btSalvar.setText("Salvar");
         btSalvar.setActionCommand("salvar");
+        btSalvar.setPreferredSize(new java.awt.Dimension(65, 23));
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSalvarActionPerformed(evt);
@@ -142,6 +194,9 @@ public class CadastroView extends javax.swing.JFrame {
         });
 
         btExcluir.setText("Excluir");
+        btExcluir.setActionCommand("excluir");
+        btExcluir.setEnabled(false);
+        btExcluir.setPreferredSize(new java.awt.Dimension(65, 23));
         btExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btExcluirActionPerformed(evt);
@@ -149,9 +204,21 @@ public class CadastroView extends javax.swing.JFrame {
         });
 
         btEditar.setText("Editar");
+        btEditar.setActionCommand("editar");
+        btEditar.setEnabled(false);
+        btEditar.setPreferredSize(new java.awt.Dimension(65, 23));
         btEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btEditarActionPerformed(evt);
+            }
+        });
+
+        btNovo.setText("Novo");
+        btNovo.setActionCommand("novo");
+        btNovo.setPreferredSize(new java.awt.Dimension(65, 23));
+        btNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNovoActionPerformed(evt);
             }
         });
 
@@ -177,12 +244,13 @@ public class CadastroView extends javax.swing.JFrame {
                         .addComponent(labelEmail)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 61, Short.MAX_VALUE)
-                        .addComponent(btEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -204,9 +272,10 @@ public class CadastroView extends javax.swing.JFrame {
                 .addComponent(campoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btSalvar)
-                    .addComponent(btExcluir)
-                    .addComponent(btEditar))
+                    .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(53, 53, 53))
         );
 
@@ -239,6 +308,54 @@ public class CadastroView extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tabelaDados);
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Sistema de armazenamento"));
+
+        radioSGBD.setSelected(true);
+        radioSGBD.setText("SGBD");
+        radioSGBD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioSGBDActionPerformed(evt);
+            }
+        });
+
+        radioXML.setText("XML");
+        radioXML.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioXMLActionPerformed(evt);
+            }
+        });
+
+        radioArquivo.setText("ARQUIVO");
+        radioArquivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioArquivoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(radioSGBD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(77, 77, 77)
+                .addComponent(radioXML, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(68, 68, 68)
+                .addComponent(radioArquivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radioSGBD)
+                    .addComponent(radioXML)
+                    .addComponent(radioArquivo))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -246,19 +363,21 @@ public class CadastroView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -276,14 +395,6 @@ public class CadastroView extends javax.swing.JFrame {
         
     }//GEN-LAST:event_tabelaAnimaisKeyReleased
 
-    private void tabelaDadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaDadosMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tabelaDadosMouseClicked
-
-    private void tabelaDadosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaDadosKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tabelaDadosKeyReleased
-
     private void campoEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoEmailActionPerformed
@@ -297,30 +408,60 @@ public class CadastroView extends javax.swing.JFrame {
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-        // TODO add your handling code here:
+        this.getController().tratarEvento(evt);
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
-        // TODO add your handling code here:
+       this.getController().tratarEvento(evt);
     }//GEN-LAST:event_btEditarActionPerformed
+
+    private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
+        this.getController().tratarEvento(evt);
+    }//GEN-LAST:event_btNovoActionPerformed
+
+    private void tabelaDadosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaDadosKeyReleased
+        this.getController().tratarTecladoTabela(evt);
+    }//GEN-LAST:event_tabelaDadosKeyReleased
+
+    private void tabelaDadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaDadosMouseClicked
+        this.getController().tratarTecladoMouse(evt);
+    }//GEN-LAST:event_tabelaDadosMouseClicked
+
+    private void radioSGBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioSGBDActionPerformed
+       this.getController().tratarRadio(evt);
+    }//GEN-LAST:event_radioSGBDActionPerformed
+
+    private void radioArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioArquivoActionPerformed
+       this.getController().tratarRadio(evt);
+    }//GEN-LAST:event_radioArquivoActionPerformed
+
+    private void radioXMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioXMLActionPerformed
+       this.getController().tratarRadio(evt);
+    }//GEN-LAST:event_radioXMLActionPerformed
 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btEditar;
     private javax.swing.JButton btExcluir;
+    private javax.swing.JButton btNovo;
     private javax.swing.JButton btSalvar;
     private javax.swing.JButton btSalvar4;
     private javax.swing.JTextField campoEmail;
     private javax.swing.JTextField campoNome;
     private javax.swing.JFormattedTextField campoTelefone;
+    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel labelEmail;
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelTelefone;
+    private javax.swing.JRadioButton radioArquivo;
+    private javax.swing.JRadioButton radioSGBD;
+    private javax.swing.JRadioButton radioXML;
     private javax.swing.JTable tabelaAnimais;
     private javax.swing.JTable tabelaDados;
     // End of variables declaration//GEN-END:variables

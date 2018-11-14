@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class ContatoSGBD implements ContatoDAO {
 
     @Override
-    public void salvar(Contato contato) {
+    public boolean salvar(Contato contato) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
 
@@ -27,14 +27,15 @@ public class ContatoSGBD implements ContatoDAO {
             stmt.executeUpdate();
 
         } catch (SQLException ex) {
-            System.out.println("algo de errado não está certo\n" + ex);
+            return false;
         } finally {
             Conexao.closeConnection(con, stmt);
         }
+        return true;
     }
 
     @Override
-    public void editar(Contato p) {
+    public boolean editar(Contato p) {
 
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
@@ -49,14 +50,15 @@ public class ContatoSGBD implements ContatoDAO {
 
             stmt.executeUpdate();
         } catch (SQLException ex) {
-
+            return false;
         } finally {
             Conexao.closeConnection(con, stmt);
         }
+        return true;
     }
 
     @Override
-    public void excluir(String nome) {
+    public boolean excluir(String nome) {
 
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
@@ -68,10 +70,12 @@ public class ContatoSGBD implements ContatoDAO {
 
         } catch (SQLException ex) {
 
+            return false;
+
         } finally {
             Conexao.closeConnection(con, stmt);
         }
-
+        return true;
     }
 
     public Contato buscar(String nome) {
@@ -94,12 +98,13 @@ public class ContatoSGBD implements ContatoDAO {
                 c1.setNome(rs.getString("nome"));
                 c1.setTelefone(rs.getString("telefone"));
                 c1.setEmail(rs.getString("email"));
-                
+
             }
 
         } catch (SQLException ex) {
-            
-            
+
+            return null;
+
         } finally {
             Conexao.closeConnection(con, stmt, rs);
         }
@@ -127,13 +132,15 @@ public class ContatoSGBD implements ContatoDAO {
 
                 c1.setNome(rs.getString("nome"));
                 c1.setTelefone(rs.getString("telefone"));
-                c1.setEmail(rs.getString("fone"));
+                c1.setEmail(rs.getString("email"));
 
                 contatos.add(c1);
             }
 
         } catch (SQLException ex) {
 
+            return null;
+        
         } finally {
             Conexao.closeConnection(con, stmt, rs);
         }

@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 public interface ContatoDAO {
     
-    public void salvar(Contato dados);
-    public void editar(Contato nome);
-    public void excluir(String nome);
+    public boolean salvar(Contato dados);
+    public boolean editar(Contato nome);
+    public boolean excluir(String nome);
     public Contato buscar(String nome);
     public ArrayList<Contato> lista();
     
