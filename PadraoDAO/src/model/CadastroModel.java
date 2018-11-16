@@ -1,9 +1,10 @@
-package models;
+package model;
 
-import DAO.ContatoARQ;
+
 import DAO.ContatoDAO;
-import DAO.ContatoSGBD;
-import DAO.ContatoXML;
+import DAO.ContatoDAO_ARQ;
+import DAO.ContatoDAO_SGBD;
+import DAO.ContatoDAO_XML;
 import java.util.ArrayList;
 
 public class CadastroModel {
@@ -30,23 +31,27 @@ public class CadastroModel {
         return salvo;
     }   
 
-    public void editar(Contato contato, int sistemaArmazenamento) {
+    public boolean editar(Contato contato, int sistemaArmazenamento) {
 
+       boolean editou = false;
+       
          if (this.getDaos().get(sistemaArmazenamento) != null) {
-            this.getDaos().get(sistemaArmazenamento).editar(contato);
+            editou = this.getDaos().get(sistemaArmazenamento).editar(contato);
             this.notifyALL();
          }
-  
+        return editou;
     }
 
-    public void excluir(Contato contato, int sistemaArmazenamento) {
+    public boolean excluir(Contato contato, int sistemaArmazenamento) {
 
+        boolean excluiu = false;
+        
         if (this.getDaos().get(sistemaArmazenamento) != null) {
-            this.getDaos().get(sistemaArmazenamento).excluir(contato.getNome());
+            excluiu =  this.getDaos().get(sistemaArmazenamento).excluir(contato.getNome());
             this.notifyALL();
 
         }
-
+        return excluiu;
     }
 
     public Contato buscar(String nome, int sistemaArmazenamento) {
@@ -55,10 +60,10 @@ public class CadastroModel {
 
     }
 
-    public ArrayList<Contato> lista(int sistemaDados) {
+    public ArrayList<Contato> lista(int sistemaArmazenamento) {
         
-        if(this.getDaos().get(sistemaDados) != null)
-          return this.getDaos().get(sistemaDados).lista();
+        if(this.getDaos().get(sistemaArmazenamento) != null)
+          return this.getDaos().get(sistemaArmazenamento).lista();
 
         return null;
     }
@@ -77,9 +82,9 @@ public class CadastroModel {
 
     private void criarDAOS() {
 
-        this.getDaos().add(new ContatoSGBD());
-        this.getDaos().add(new ContatoXML());
-        this.getDaos().add(new ContatoARQ());
+        this.getDaos().add(new ContatoDAO_SGBD());
+        this.getDaos().add(new ContatoDAO_XML());
+        this.getDaos().add(new ContatoDAO_ARQ());
 
     }
 

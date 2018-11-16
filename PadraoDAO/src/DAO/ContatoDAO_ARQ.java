@@ -8,11 +8,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import models.Contato;
+import model.Contato;
 
-public class ContatoARQ implements ContatoDAO {
+public class ContatoDAO_ARQ implements ContatoDAO {
 
-    private final String CAMINHO = "C:\\Users\\Lauro Costa\\Documents\\NetBeansProjects\\Padrao-DAO\\PadraoDAO\\src\\arquivo.txt";
+   private final String CAMINHO = "src\\arquivosDados\\contatos.txt";
 
     @Override
     public boolean salvar(Contato dados) {

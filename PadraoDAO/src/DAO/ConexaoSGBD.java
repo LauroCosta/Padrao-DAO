@@ -1,4 +1,4 @@
-package conexao;
+package DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,10 +8,10 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Conexao {
+public class ConexaoSGBD {
 
     private static final String DRIVER = "com.mysql.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/DAO";
+    private static final String URL = "jdbc:mysql://localhost:3306/contatos";
     private static final String USER = "root";
     private static final String PASS = "";
 
@@ -30,7 +30,7 @@ public class Conexao {
                 con.close();
             
         } catch (SQLException ex) {
-            Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConexaoSGBD.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -44,7 +44,7 @@ public class Conexao {
                 stmt.close();
             
         } catch (SQLException ex) {
-            Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConexaoSGBD.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -56,7 +56,7 @@ public class Conexao {
             try {
                 rs.close();
             } catch (SQLException ex) {
-                Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ConexaoSGBD.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

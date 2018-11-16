@@ -1,5 +1,5 @@
-import models.CadastroModel;
-import views.CadastroView;
+import model.CadastroModel;
+import view.CadastroView;
 
 public class Main {
 

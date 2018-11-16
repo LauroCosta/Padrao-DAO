@@ -1,6 +1,6 @@
 package DAO;
 
-import models.*;
+import model.Contato;
 import java.util.ArrayList;
 
 public interface ContatoDAO {

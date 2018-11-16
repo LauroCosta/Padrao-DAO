@@ -1,6 +1,6 @@
-package views;
+package view;
 
-import controllers.CadastroController;
+import controller.CadastroController;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import models.CadastroModel;
+import model.CadastroModel;
 
 
 public class CadastroView extends javax.swing.JFrame {
@@ -175,6 +175,8 @@ public class CadastroView extends javax.swing.JFrame {
 
         labelNome.setText("Nome");
 
+        campoNome.setEnabled(false);
+
         labelTelefone.setText("Telefone");
 
         try {
@@ -182,9 +184,11 @@ public class CadastroView extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        campoTelefone.setEnabled(false);
 
         labelEmail.setText("Email");
 
+        campoEmail.setEnabled(false);
         campoEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoEmailActionPerformed(evt);
@@ -193,6 +197,7 @@ public class CadastroView extends javax.swing.JFrame {
 
         btSalvar.setText("Salvar");
         btSalvar.setActionCommand("salvar");
+        btSalvar.setEnabled(false);
         btSalvar.setPreferredSize(new java.awt.Dimension(65, 23));
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,6 +227,7 @@ public class CadastroView extends javax.swing.JFrame {
 
         btNovo.setText("Novo");
         btNovo.setActionCommand("novo");
+        btNovo.setEnabled(false);
         btNovo.setPreferredSize(new java.awt.Dimension(65, 23));
         btNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -302,6 +308,7 @@ public class CadastroView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabelaDados.setEnabled(false);
         tabelaDados.getTableHeader().setReorderingAllowed(false);
         tabelaDados.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

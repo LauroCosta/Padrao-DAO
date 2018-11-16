@@ -1,19 +1,18 @@
 package DAO;
 
+import model.Contato;
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
-import models.*;
-import conexao.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ContatoSGBD implements ContatoDAO {
+public class ContatoDAO_SGBD implements ContatoDAO {
 
     @Override
     public boolean salvar(Contato contato) {
-        Connection con = Conexao.getConnection();
+        Connection con = ConexaoSGBD.getConnection();
         PreparedStatement stmt = null;
 
         try {
@@ -29,7 +28,7 @@ public class ContatoSGBD implements ContatoDAO {
         } catch (SQLException ex) {
             return false;
         } finally {
-            Conexao.closeConnection(con, stmt);
+            ConexaoSGBD.closeConnection(con, stmt);
         }
         return true;
     }
@@ -37,7 +36,7 @@ public class ContatoSGBD implements ContatoDAO {
     @Override
     public boolean editar(Contato p) {
 
-        Connection con = Conexao.getConnection();
+        Connection con = ConexaoSGBD.getConnection();
         PreparedStatement stmt = null;
 
         try {
@@ -52,7 +51,7 @@ public class ContatoSGBD implements ContatoDAO {
         } catch (SQLException ex) {
             return false;
         } finally {
-            Conexao.closeConnection(con, stmt);
+            ConexaoSGBD.closeConnection(con, stmt);
         }
         return true;
     }
@@ -60,7 +59,7 @@ public class ContatoSGBD implements ContatoDAO {
     @Override
     public boolean excluir(String nome) {
 
-        Connection con = Conexao.getConnection();
+        Connection con = ConexaoSGBD.getConnection();
         PreparedStatement stmt = null;
 
         try {
@@ -73,14 +72,14 @@ public class ContatoSGBD implements ContatoDAO {
             return false;
 
         } finally {
-            Conexao.closeConnection(con, stmt);
+            ConexaoSGBD.closeConnection(con, stmt);
         }
         return true;
     }
 
     public Contato buscar(String nome) {
 
-        Connection con = Conexao.getConnection();
+        Connection con = ConexaoSGBD.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
@@ -106,7 +105,7 @@ public class ContatoSGBD implements ContatoDAO {
             return null;
 
         } finally {
-            Conexao.closeConnection(con, stmt, rs);
+            ConexaoSGBD.closeConnection(con, stmt, rs);
         }
 
         return c1;
@@ -115,7 +114,7 @@ public class ContatoSGBD implements ContatoDAO {
 
     public ArrayList<Contato> lista() {
 
-        Connection con = Conexao.getConnection();
+        Connection con = ConexaoSGBD.getConnection();
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -142,7 +141,7 @@ public class ContatoSGBD implements ContatoDAO {
             return null;
         
         } finally {
-            Conexao.closeConnection(con, stmt, rs);
+            ConexaoSGBD.closeConnection(con, stmt, rs);
         }
         return contatos;
     }

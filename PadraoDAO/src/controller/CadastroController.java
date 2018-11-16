@@ -1,14 +1,14 @@
-package controllers;
+package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
-import models.CadastroModel;
-import models.Contato;
-import models.Observer;
-import views.CadastroView;
+import model.CadastroModel;
+import model.Contato;
+import model.Observer;
+import view.CadastroView;
 
 public class CadastroController implements Observer {
 
@@ -20,7 +20,7 @@ public class CadastroController implements Observer {
         this.setModel(model);
         this.setView(view);
         this.getModel().addObserver(this);
-     
+
     }
 
     public CadastroView getView() {
@@ -49,25 +49,20 @@ public class CadastroController implements Observer {
 
             case "salvar":
 
-                Contato c1 = new Contato();
-                c1.setNome(this.getView().getCampoNome().getText());
-                c1.setTelefone(this.getView().getCampoTelefone().getText());
-                c1.setEmail(this.getView().getCampoEmail().getText());
+                String temp = this.contatoSelecionado().toString();
 
-                if (this.validarFormulario(c1) != null) {
-                    this.getView().notificaUsuario(this.validarFormulario(c1));
+                if (this.validarFormulario(this.contatoSelecionado()) != null) {
+                    this.getView().notificaUsuario(this.validarFormulario(this.contatoSelecionado()));
                     break;
                 }
-
-                if (this.isCadastrado(c1)) {
+                if (this.isCadastrado(this.contatoSelecionado())) {
                     this.getView().notificaUsuario("Usuario já cadastrado: \n");
                     break;
                 }
 
-                boolean salvo = this.getModel().salvar(c1, this.verificarSistemaArmazenamento());
+                if (this.getModel().salvar(this.contatoSelecionado(), this.verificarSistemaArmazenamento())) {
 
-                if (salvo) {
-                    this.getView().notificaUsuario("Contato salvo com sucesso: \n" + c1.toString());
+                    this.getView().notificaUsuario("Contato salvo com sucesso: \n" + temp);
                 } else {
                     this.getView().notificaUsuario("Não foi possivel salvar o contato");
                 }
@@ -82,12 +77,11 @@ public class CadastroController implements Observer {
 
             case "excluir":
 
-                Contato c2 = new Contato();
-                c2.setNome(this.getView().getCampoNome().getText());
-                c2.setTelefone(this.getView().getCampoTelefone().getText());
-                c2.setEmail(this.getView().getCampoEmail().getText());
-
-                this.getModel().excluir(c2, this.verificarSistemaArmazenamento());
+                if (this.getModel().excluir(this.contatoSelecionado(), this.verificarSistemaArmazenamento())) {
+                    this.getView().notificaUsuario("Contato excluído com sucesso!");
+                } else {
+                    this.getView().notificaUsuario("Contato não foi excluído, tente novamente...");
+                }
 
                 break;
 
@@ -103,17 +97,23 @@ public class CadastroController implements Observer {
 
             case "salvarAlt":
 
-                this.getView().getBtExcluir().setEnabled(true);
-                this.camposEditaveis(false);
-                this.getView().getBtEditar().setActionCommand("editar");
-                this.getView().getBtEditar().setText("Editar");
-
                 if (this.validarFormulario(this.contatoSelecionado()) != null) {
                     this.getView().notificaUsuario(this.validarFormulario(this.contatoSelecionado()));
                     break;
-                }
 
-                this.getModel().editar(this.contatoSelecionado(), this.verificarSistemaArmazenamento());
+                } else {
+
+                    this.getView().getBtExcluir().setEnabled(true);
+                    this.camposEditaveis(false);
+                    this.getView().getBtEditar().setActionCommand("editar");
+                    this.getView().getBtEditar().setText("Editar");
+
+                    if (this.getModel().editar(this.contatoSelecionado(), this.verificarSistemaArmazenamento())) {
+                        this.getView().notificaUsuario("Contato alterado com sucesso!");
+                    } else {
+                        this.getView().notificaUsuario("Contato não alterado, tente novamente...");
+                    }
+                }
 
                 break;
 
@@ -138,10 +138,15 @@ public class CadastroController implements Observer {
     }
 
     public void tratarTecladoTabela(KeyEvent evt) {
+       
+    
         this.pegarSelecionado();
     }
 
     public void tratarTecladoMouse(MouseEvent evt) {
+       this.getView().getBtEditar().setActionCommand("editar");
+       this.getView().getBtEditar().setText("Editar");
+       
         this.pegarSelecionado();
     }
 
@@ -200,38 +205,14 @@ public class CadastroController implements Observer {
         this.limparForm();
     }
 
-    public void tratarRadio(ActionEvent evt) {
+    private void ativarCampos() {
 
-        switch (evt.getActionCommand()) {
-
-            case "SGBD":
-
-                this.getView().getRadioSGBD().setSelected(true);
-                this.getView().getRadioXML().setSelected(false);
-                this.getView().getRadioArquivo().setSelected(false);
-                this.preencherTabela(0);
-
-                break;
-
-            case "XML":
-
-                this.getView().getRadioXML().setSelected(true);
-                this.getView().getRadioSGBD().setSelected(false);
-                this.getView().getRadioArquivo().setSelected(false);
-                this.preencherTabela(1);
-
-                break;
-
-            case "ARQUIVO":
-
-                this.getView().getRadioArquivo().setSelected(true);
-                this.getView().getRadioSGBD().setSelected(false);
-                this.getView().getRadioXML().setSelected(false);
-                this.preencherTabela(2);
-
-                break;
-
-        }
+        this.getView().getCampoNome().setEnabled(true);
+        this.getView().getCampoTelefone().setEnabled(true);
+        this.getView().getCampoEmail().setEnabled(true);
+        this.getView().getBtSalvar().setEnabled(true);
+        this.getView().getTabelaDados().setEnabled(true);
+        this.getView().getBtNovo().setEnabled(true);
 
     }
 
@@ -282,6 +263,43 @@ public class CadastroController implements Observer {
         } else {
             return true;
         }
+    }
+
+    public void tratarRadio(ActionEvent evt) {
+
+        this.ativarCampos();
+
+        switch (evt.getActionCommand()) {
+
+            case "SGBD":
+
+                this.getView().getRadioSGBD().setSelected(true);
+                this.getView().getRadioXML().setSelected(false);
+                this.getView().getRadioArquivo().setSelected(false);
+                this.preencherTabela(0);
+
+                break;
+
+            case "XML":
+
+                this.getView().getRadioXML().setSelected(true);
+                this.getView().getRadioSGBD().setSelected(false);
+                this.getView().getRadioArquivo().setSelected(false);
+                this.preencherTabela(1);
+
+                break;
+
+            case "ARQUIVO":
+
+                this.getView().getRadioArquivo().setSelected(true);
+                this.getView().getRadioSGBD().setSelected(false);
+                this.getView().getRadioXML().setSelected(false);
+                this.preencherTabela(2);
+
+                break;
+
+        }
+
     }
 
     @Override
